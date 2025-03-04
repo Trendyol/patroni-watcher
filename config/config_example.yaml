@@ -1,0 +1,88 @@
+  # Patroni Alarm System Configuration
+
+# Log level (debug, info, warn, error, fatal)
+log_level: "info"
+
+# Check interval (in seconds)
+check_interval: 60s
+
+# PostgreSQL clusters
+clusters:
+  - name: "pg-example-01"
+    endpoint: "http://example.com:8008/"
+    username: ""
+    password: ""
+
+# Monitoring rules
+rules:
+  - name: "master_check"
+    description: "Cluster master role should be present"
+    path: "role"
+    operator: "equals"
+    value: "master"
+    severity: "critical"
+  
+  - name: "state_check"
+    description: "Cluster should be running"
+    path: "state"
+    operator: "equals"
+    value: "running"
+    severity: "critical"
+  
+  - name: "dcs_last_seen_check"
+    description: "DCS last seen time should not be older than 3 minutes"
+    path: "dcs_last_seen"
+    operator: "time_diff_less_than"
+    value: 180
+    severity: "high"
+  
+  - name: "sync_replication_check"
+    description: "At least one sync replication should be present"
+    path: "replication"
+    check: "sync_replica_count"
+    operator: "greater_than_or_equals"
+    value: 1
+    severity: "high"
+  
+  - name: "deep_replication_status_check"
+    description: "All replicas should be running"
+    check: "deep_replication_status"
+    severity: "high"
+
+  - name: "pending_restart_check"
+    description: "Pending restart should not be present"
+    path: "pending_restart"
+    operator: "equals"
+    value: false
+    severity: "medium"
+
+# Alarm mechanisms
+alerts:
+  # Slack integration
+  slack:
+    enabled: true
+    webhook_url: "https://hooks.slack.com/services/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"
+    channel: "#tbp"
+  
+  # Email integration
+  email:
+    enabled: false
+    smtp_host: "smtp.example.com"
+    smtp_port: 587
+    username: "alerts@example.com"
+    password: "password123"
+    from: "alerts@example.com"
+    to:
+      - "dba@example.com"
+      - "sysadmin@example.com"
+  
+  # Webhook integration
+  webhook:
+    enabled: false
+    url: "https://webhook.example.com/patroni-watcher"
+  
+  # Telegram integration
+  telegram:
+    enabled: false
+    bot_token: "12345:ABCDEFGHIJKLMNO"
+    chat_id: "-12345678" 
