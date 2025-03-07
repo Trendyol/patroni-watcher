@@ -1,4 +1,4 @@
-# Patroni Alarm System
+# Patroni Alert System
 
 This application is a Go application that monitors PostgreSQL Patroni clusters and generates alarms based on specified rules.
 

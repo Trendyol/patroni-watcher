@@ -1,4 +1,4 @@
 .vscode
 .idea
-.patroni-watcher
-./config/config.yaml
+patroni-watcher
+config/config.yaml
