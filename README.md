@@ -1,3 +1,5 @@
+
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Trendyol/patroni-watcher/badge)](https://scorecard.dev/viewer/?uri=github.com/Trendyol/patroni-watcher)
 # Patroni Alert System
 
 This application is a Go application that monitors PostgreSQL Patroni clusters and generates alarms based on specified rules.
